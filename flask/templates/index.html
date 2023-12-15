@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- <script src="/content/flask/templates/index.js"></script> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주도 사투리 번역기</title>
+</head>
+<body>
+    <form action="" id="voiceForm">
+        <h1>임시 페이지입니다</h1>
+        사투리 음성이 나옵니다.
+        <br>
+        <input type="text" id="sentence" placeholder="사투리를 입력해주세요.">
+        <button type="submit">전송</button>      
+    </form>
+    
+
+    
+    
+    {% if sentence != null%}
+    <h1>문장이 있습니다~ {{sentence}} </h1><br>
+    <audio src="../static/result.wav" controls></audio>
+    {% endif %}
+    
+    
+    
+    
+    
+    
+    
+    <!-- javascript 영역  ==============  -->
+    <script>
+        // 페이지가 렌더링 될때까지 기다렸다가 시작
+        window.addEventListener('DOMContentLoaded', function()
+        {
+            let voiceForm = document.getElementById("voiceForm");
+
+            voiceForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                let sentence = document.getElementById("sentence");
+
+                if (sentence.value == "") {
+                    alert("문장을 입력해주세요!");
+                } else {
+                    // perform operation with form input
+                    alert(sentence.value + " 문장이 입력되었습니다!");
+                    location.href='/voice/'+sentence.value;
+                //      `This form has a username of ${username.value} and password of ${password.value}`
+
+                }
+            });
+        });
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>
