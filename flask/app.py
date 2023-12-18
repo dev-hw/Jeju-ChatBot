@@ -15,7 +15,11 @@ def index():
 @app.route('/voice/<sentence>')
 def voice(sentence):
     voice_inference(sentence)
-    return render_template("index.html", sentence=sentence)
+    return sentence
+
+@app.route('/chatbot')
+def chatbot():
+    return render_template("chatbot.html")
 
 
 if __name__ == '__main__':
