@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="../static/chatbot.css">
+    <link rel="icon" href="../static/logo.png">
     
+    <!-- jQuery 불러오기 -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     
     <title>사투리 챗봇</title>
 </head>
@@ -20,25 +23,41 @@
         <div class="block--background">
         <div class="chatbot__overview">
             <ul class="chatlist">
-            <li class="bot__output bot__output--standard">안녕하우꽈!</li>
-            <li class="bot__output bot__output--standard">오늘 하루 어땠우꽈?</li>
+                <li class="bot__output bot__output--standard"><span class="bot__command">안녕하우꽈!</span></li>
+            <li class="bot__output bot__output--standard"><span class="bot__command">오늘 하루 어땠우꽈?</span></li>
             <li class="bot__output bot__output--standard">
                 <span class="bot__output--second-sentence">저에게 이런 것들을 물어봐주세요!</span>
                 <ul>
-                <li class="input__nested-list">"너 밥 먹었니?"</li>
+                <li class="input__nested-list">"넌 뭘 하고있어?"</li>
                 <!-- <span class="bot__command"></span> -->
-                <li class="input__nested-list">"<span class="bot__command">JavaScript</span>로 눈송이를 만들어주세요"</li>
-                <li class="input__nested-list">"가장 싫어하는 음식은 무엇입니까?"</li>
-                <li class="input__nested-list">레시피</li>
+                    <li class="input__nested-list">"나랑 대화하자"</li>
+                <li class="input__nested-list">"밥 먹었어?"</li>
+                <li class="input__nested-list">제주도에서 뭐가 제일 재밌니?</li>
                 </ul>
-                저에게 어쩌고를 할 수 있습니다~!
+                
             </li>
             </ul>
         </div>
+            
+            
+        <!-- toggle button [voice] -->
+        <div>
+            <fieldset>
+                <label style="margin: 0 auto;">
+                  <input role="switch" id="voice_yn" type="checkbox" />
+                  <span style="color:white">voice</span>
+                </label>
+                
+            </fieldset>
+        </div>
+        
+
+            
+            
         <div class="chatbox-area">
             <form action="" id="chatform">
-                <textarea placeholder="Talk to me!" class="chatbox" name="chatbox" resize: "none" minlength="2"></textarea>
-                <input class="submit-button" type="submit" value="send">
+                <textarea placeholder="문장을 입력해주세요!" class="chatbox" name="chatbox" resize: "none" minlength="2"></textarea>
+                <input class="submit-button" type="submit" value="전송">
             </form>
         </div>
             <div class="block--background"></div>
@@ -46,6 +65,9 @@
     </main>
 
 
+    <div id="hidden_area" style="display:none">
+    </div>
+        
 
     <!-- javascript 호출 -->
     <script src="../static/chatbot.js"></script>

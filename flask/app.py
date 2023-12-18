@@ -14,13 +14,24 @@ def index():
 
 @app.route('/voice/<sentence>')
 def voice(sentence):
-    voice_inference(sentence)
-    return sentence
+    OUTPUT_WAV_PATH = voice_inference(sentence)
+    return OUTPUT_WAV_PATH
+
+
+
+
+
 
 @app.route('/chatbot')
 def chatbot():
     return render_template("chatbot.html")
 
+@app.route('/question/<question>')
+def question(question):
+    # voice_inference(sentence)
+    # result = answer_inference(question)
+    result = ""
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)
