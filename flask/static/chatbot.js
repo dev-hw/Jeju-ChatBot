@@ -68,8 +68,24 @@ var checkInput = function(input) {
   // 답변을 제주도 사투리어로 변경
   // jeju_answer = 함수(answer)
 
-  // 음성 출력
-  // voice = 함수(jeju_answer)
+  // 음성 출력 여부 확인
+  // voice toggle button 
+  let voice_check = document.getElementById("voice_yn");
+  let is_checked = voice_check.checked
+  console.log("is_checked:", is_checked)
+  if (is_checked) {
+    // voice = 함수(jeju_answer)
+    console.log("소리O")
+
+    jeju_answer = "안녕하우꽈" // 테스트용으로 하드코딩해둠
+    voice = getVoice(jeju_answer)
+  }else{
+    console.log("소리X")
+  }
+    
+  
+
+
 
   // 화면에 출력하기
   // 함수(answer, jeju_answer, voice)
@@ -77,6 +93,47 @@ var checkInput = function(input) {
   // 답장을 화면에 출력하기
   responseCommand(input);
 
+}
+
+// 답변 받아오기
+function getAnswer(input){            
+    $.ajax({
+        type:"get",  // fetch의 method 기능
+        url: "/question/"+input, 
+        timeout:10000,
+        // 성공
+        success:function(){
+            console.log("success " + input);
+        },
+        error:function(request,error){
+            alert("fail " + input);
+        }
+    })
+}
+
+// 음성 만들기
+function getVoice(sentence){
+    $.ajax({
+        type:"get",  // fetch의 method 기능
+        url: "/voice/"+sentence, 
+        timeout:10000,
+        // 성공
+        success:function(audio_src){
+            console.log("success " + audio_src);
+            print_voice(audio_src);
+        },
+        error:function(request,error){
+            alert("fail " + sentence);
+        }
+    })
+}
+
+// 음성 소리 출력하기
+function print_voice(audio_src){
+  let hidden_area = document.querySelector("#hidden_area");
+  voice_tag_html = `
+      <audio src="../${audio_src}" autoplay></audio>`;
+  hidden_area.insertAdjacentHTML("beforeend", voice_tag_html);
 }
 
 
@@ -180,3 +237,6 @@ var reactionInput = {
     return
     }
 }
+
+
+
