@@ -57,27 +57,54 @@ var createBubble = function(input) {
 }
 
 
+// // 텍스트 입력 후 전송 시 호출됨
+// var checkInput = function(input) {
+
+//   isReaction = true;
+
+//   // input으로 답변을 받기
+//   // answer = 함수(input)
+
+//   // 답변을 제주도 사투리어로 변경
+//   // jeju_answer = 함수(answer)
+
+//   // 음성 출력
+//   // voice = 함수(jeju_answer)
+
+//   // 화면에 출력하기
+//   // 함수(answer, jeju_answer, voice)
+
+//   // 답장을 화면에 출력하기
+//   responseCommand(input);
+
+// }
 // 텍스트 입력 후 전송 시 호출됨
 var checkInput = function(input) {
-
   isReaction = true;
 
-  // input으로 답변을 받기
-  // answer = 함수(input)
+  // Ajax를 사용하여 Flask로 데이터 전송
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/process_input", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-  // 답변을 제주도 사투리어로 변경
-  // jeju_answer = 함수(answer)
+  // 전송할 데이터 구성
+  var data = JSON.stringify({ input: input });
 
-  // 음성 출력
-  // voice = 함수(jeju_answer)
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      // 서버에서 받은 데이터를 처리
+      var result = JSON.parse(xhr.responseText);
 
-  // 화면에 출력하기
-  // 함수(answer, jeju_answer, voice)
+      // 화면에 출력하기
+      // 여기서는 간단하게 alert를 사용하였습니다. 원하는 방식으로 변경 가능합니다.
+      responseCommand(result.jeju_answer);
+    }
+  };
 
-  // 답장을 화면에 출력하기
-  responseCommand(input);
+  // 데이터 전송
+  xhr.send(data);
+};
 
-}
 
 
 function responseCommand(unkwnCommReaction) {
