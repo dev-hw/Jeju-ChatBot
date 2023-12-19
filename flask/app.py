@@ -15,12 +15,18 @@ def index():
 
 @app.route('/voice/<sentence>')
 def voice(sentence):
-    voice_inference(sentence)
-    return sentence
+    OUTPUT_WAV_PATH = voice_inference(sentence)
+    return OUTPUT_WAV_PATH
+
+
+
+
+
 
 @app.route('/chatbot')
 def chatbot():
     return render_template("chatbot.html")
+
 
 # 입력을 처리하는 경로
 @app.route('/process_input', methods=['POST'])
