@@ -53,48 +53,60 @@ var createBubble = function(input) {
   //adds chatBubble to chatlist
   chatList.appendChild(chatBubble)
 
-  checkInput(input);
+//   checkInput(input);
+    checkInput(input)
 }
 
 
-// // 텍스트 입력 후 전송 시 호출됨
-// var checkInput = function(input) {
 
-//   isReaction = true;
 
-//   // input으로 답변을 받기
-//   // answer = 함수(input)
 
-//   // 답변을 제주도 사투리어로 변경
-//   // jeju_answer = 함수(answer)
 
-//   // 음성 출력
-//   // voice = 함수(jeju_answer)
+// 비동기 함수 정의
+async function asyncFunction(input) {
+    // 비동기 작업을 수행하고 완료될 때까지 대기
+    await new Promise(resolve => setTimeout(() => resolve(getAnswer(input)), 5000));
+    console.log("비동기 함수가 완료되었습니다.");
+    
+}
 
-//   // 화면에 출력하기
-//   // 함수(answer, jeju_answer, voice)
 
-//   // 답장을 화면에 출력하기
-//   responseCommand(input);
+// 실행 함수 정의
+async function execute(input) {
+    answer = false
+    
+    if (!input){
+        return false
+    }
+    
+    console.log("함수 실행 시작");
 
-// }
+    // 비동기 함수 실행
+    await asyncFunction(input);
+
+    console.log("함수 실행 종료");
+    // console.log("결과:", answer, jeju_answer);
+    if (answer){
+        return true
+    }else{
+        return false
+    }
+}
+
+
 // 텍스트 입력 후 전송 시 호출됨
-var checkInput = function(input) {
+async function checkInput(input) {
+
   isReaction = true;
-
-  // Ajax를 사용하여 Flask로 데이터 전송
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/process_input", true);
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-  // 전송할 데이터 구성
-  var data = JSON.stringify({ input: input });
-
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      // 서버에서 받은 데이터를 처리
-      var result = JSON.parse(xhr.responseText);
+  let execute_result = false
+  
+  while(!execute_result){
+      execute_result = await execute(input)        
+  }
+    
+  console.log("answer: ", answer);
+  console.log("jeju_answer: ", jeju_answer);
+    
 
   // 음성 출력 여부 확인
   // voice toggle button 
@@ -102,41 +114,65 @@ var checkInput = function(input) {
   let is_checked = voice_check.checked
   console.log("is_checked:", is_checked)
   if (is_checked) {
-    // voice = 함수(jeju_answer)
     console.log("소리O")
-
-    jeju_answer = "안녕하우꽈" // 테스트용으로 하드코딩해둠
-    voice = getVoice(jeju_answer)
+    voice = await getVoice(jeju_answer)
   }else{
     console.log("소리X")
   }
     
-
-      // 화면에 출력하기
+   if (answer == ""){
+   
+      responseCommand("다시 입력해주세요."); 
+   
+   }else{
+       // 화면에 출력하기
       // 여기서는 간단하게 alert를 사용하였습니다. 원하는 방식으로 변경 가능합니다.
-      responseCommand(result.jeju_answer);
+      responseCommand(answer);
+      responseCommand(jeju_answer);
+    
     }
-  };
 
-  // 데이터 전송
-  xhr.send(data);
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // 답변 받아오기
-function getAnswer(input){            
+async function getAnswer(input){            
     $.ajax({
         type:"get",  // fetch의 method 기능
-        url: "/question/"+input, 
-        timeout:10000,
+        url: "/process_input/"+input, 
+        timeout:100000,
         // 성공
-        success:function(){
-            console.log("success " + input);
+        success:function(result){
+            console.log("success getAnswer() 함수 성공" + input);
+            answer = result.answer
+            jeju_answer = result.jeju_answer
+            console.log("answer " + answer);
+            console.log("jeju_answer " + jeju_answer);
+            
+            return "success"
         },
         error:function(request,error){
-            alert("fail " + input);
+            alert("fail getAnswer() 함수 실패 " + input);
+            
+            return "error"
         }
     })
+    
+   
 }
 
 // 음성 만들기
@@ -149,9 +185,13 @@ function getVoice(sentence){
         success:function(audio_src){
             console.log("success " + audio_src);
             print_voice(audio_src);
+            
+            return "success"
         },
         error:function(request,error){
             alert("fail " + sentence);
+            
+            return "error"
         }
     })
 }
