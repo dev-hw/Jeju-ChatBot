@@ -122,13 +122,11 @@ async function checkInput(input) {
     
    if (answer == ""){
    
-      responseCommand("다시 입력해주세요."); 
+      responseCommand("다시 입력해주세요.", "다시 입력해주세요."); 
    
    }else{
        // 화면에 출력하기
-      // 여기서는 간단하게 alert를 사용하였습니다. 원하는 방식으로 변경 가능합니다.
-      responseCommand(answer);
-      responseCommand(jeju_answer);
+      responseCommand(answer, jeju_answer);
     
     }
 
@@ -205,20 +203,25 @@ function print_voice(audio_src){
 }
 
 
-function responseCommand(unkwnCommReaction) {
+function responseCommand(comm, jeju_comm) {
   // animationCounter = 1;
 
   //create response bubble
-  var failedResponse = document.createElement('li');
+  var successResponse = document.createElement('li');
 
-  failedResponse.classList.add('bot__output');
-  failedResponse.classList.add('bot__output--failed');
+  successResponse.classList.add('bot__output');
+  successResponse.classList.add('bot__output--failed');
 
-  //Add text to failedResponse
-  failedResponse.innerHTML = unkwnCommReaction; //adds input of textarea to chatbubble list item
+  
+  response_html = `<p>${comm}</p>
+  <p style="font-size:11px;color:lightslategray">${jeju_comm}</p>`
+
+
+  //Add text to successResponse
+  successResponse.innerHTML = response_html; //adds input of textarea to chatbubble list item
 
   //add list item to chatlist
-  chatList.appendChild(failedResponse) //adds chatBubble to chatlist
+  chatList.appendChild(successResponse) //adds chatBubble to chatlist
 
   animateBotOutput();
 
