@@ -11,7 +11,7 @@ app = Flask(__name__, static_url_path='/static')
 tokenizer_name = "gogamza/kobart-base-v2"
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)  # 토크나이저 수정
 
-model_name = "/content/flask/eojin/checkpoint-59383"
+model_name = "/content/flask/eojin/checkpoint-142243"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)  # 모델 수정
 
 # Pipeline을 이용해서 학습한 모델로 텍스트 생성해보기

@@ -5,7 +5,7 @@ import os
 model_name = "gogamza/kobart-base-v2"
 tokenizer = AutoTokenizer.from_pretrained(model_name)  # 토크나이저 수정
 
-model_name = "/content/flask/eojin/checkpoint-59383"
+model_name = "/content/flask/eojin/checkpoint-142243"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)  # 모델 수정
 
 
