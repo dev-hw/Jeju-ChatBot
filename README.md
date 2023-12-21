@@ -100,7 +100,7 @@ edit autoexec.bat
 #### 채팅 진행 화면
 ![](https://i.imgur.com/EqkxL4W.png)
 ### 플로우 차트
-![](https://i.imgur.com/t6bow7X.png)
+![](https://i.imgur.com/eCwAy2W.png)
 
 
 <br>
