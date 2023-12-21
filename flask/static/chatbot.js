@@ -15,6 +15,11 @@ var sendForm = document.querySelector('#chatform'),
     unkwnCommReaction = "I didn't quite get that.",
     chatbotButton = document.querySelector(".submit-button")
 
+let printVoice = false;
+
+let bar = document.getElementById("loadding_bar")
+
+
 sendForm.onkeydown = function(e){
   if(e.keyCode == 13){
     e.preventDefault();
@@ -30,6 +35,7 @@ sendForm.onkeydown = function(e){
 };
 
 sendForm.addEventListener('submit', function(e) {
+  
   //so form doesnt submit page (no page refresh)
   e.preventDefault();
 
@@ -43,6 +49,7 @@ sendForm.addEventListener('submit', function(e) {
 }) //end of eventlistener
 
 var createBubble = function(input) {
+  
   //create input bubble
   var chatBubble = document.createElement('li');
   chatBubble.classList.add('userInput');
@@ -59,50 +66,72 @@ var createBubble = function(input) {
 
 
 
+// 프로미스를 사용한 비동기 함수
+function asyncGetAnswer(input) {
+    return new Promise((resolve, reject) => {
+        let state = getAnswer(input)
+        resolve(state)
+    });
+}
 
-
-
-// 비동기 함수 정의
-async function asyncFunction(input) {
-    // 비동기 작업을 수행하고 완료될 때까지 대기
-    await new Promise(resolve => setTimeout(() => resolve(getAnswer(input)), 5000));
-    console.log("비동기 함수가 완료되었습니다.");
-    
+// 프로미스를 사용한 비동기 함수
+function asyncGetVoice(input) {
+    return new Promise((resolve, reject) => {
+        let audio_src = getVoice(input)
+        resolve(audio_src)
+    });
 }
 
 
 // 실행 함수 정의
-async function execute(input) {
-    answer = false
+async function executeGetAnswer(input) {
     
     if (!input){
         return false
     }
     
-    console.log("함수 실행 시작");
+    console.log("asyncGetAnswer 동기 함수 실행 시작");
 
-    // 비동기 함수 실행
-    await asyncFunction(input);
+    // 동기 함수 실행
+    await asyncGetAnswer(input);
 
-    console.log("함수 실행 종료");
-    // console.log("결과:", answer, jeju_answer);
-    if (answer){
-        return true
-    }else{
+    console.log("asyncGetAnswer 동기 함수 실행 종료");
+    
+}
+
+
+// 실행 함수 정의
+async function executeGetVoice(input) {
+   
+    if (!input){
         return false
     }
+    
+    console.log("asyncGetVoice 동기 함수 실행 시작");
+
+    // 동기 함수 실행
+    await asyncGetVoice(input);
+
+    console.log("asyncGetVoice 동기 함수 실행 종료");
+    
 }
+
 
 
 // 텍스트 입력 후 전송 시 호출됨
 async function checkInput(input) {
+    
+  isDone = false
+  
+  if(!isDone){
+      bar.style.visibility="visible";
+  }
+  
 
   isReaction = true;
-  let execute_result = false
   
-  while(!execute_result){
-      execute_result = await execute(input)        
-  }
+  await executeGetAnswer(input)        
+  
     
   console.log("answer: ", answer);
   console.log("jeju_answer: ", jeju_answer);
@@ -115,7 +144,11 @@ async function checkInput(input) {
   console.log("is_checked:", is_checked)
   if (is_checked) {
     console.log("소리O")
-    voice = await getVoice(jeju_answer)
+    
+    await executeGetVoice(jeju_answer) 
+     
+    
+      
   }else{
     console.log("소리X")
   }
@@ -127,7 +160,11 @@ async function checkInput(input) {
    }else{
        // 화면에 출력하기
       responseCommand(answer, jeju_answer);
-    
+
+      if(isDone){
+          bar.style.visibility="hidden" 
+      }
+      
     }
 
 }
@@ -139,20 +176,13 @@ async function checkInput(input) {
 
 
 
-
-
-
-
-
-
-
-
 // 답변 받아오기
-async function getAnswer(input){            
+function getAnswer(input){            
     $.ajax({
         type:"get",  // fetch의 method 기능
         url: "/process_input/"+input, 
         timeout:100000,
+        async:false,
         // 성공
         success:function(result){
             console.log("success getAnswer() 함수 성공" + input);
@@ -160,14 +190,12 @@ async function getAnswer(input){
             jeju_answer = result.jeju_answer
             console.log("answer " + answer);
             console.log("jeju_answer " + jeju_answer);
-            
-            return "success"
         },
         error:function(request,error){
             alert("fail getAnswer() 함수 실패 " + input);
             
-            return "error"
         }
+    
     })
     
    
@@ -178,13 +206,14 @@ function getVoice(sentence){
     $.ajax({
         type:"get",  // fetch의 method 기능
         url: "/voice/"+sentence, 
-        timeout:10000,
+        timeout:100000,
+        async:false,
         // 성공
         success:function(audio_src){
             console.log("success " + audio_src);
-            print_voice(audio_src);
+            print_voice(audio_src)
             
-            return "success"
+            return audio_src
         },
         error:function(request,error){
             alert("fail " + sentence);
@@ -200,6 +229,7 @@ function print_voice(audio_src){
   voice_tag_html = `
       <audio src="../${audio_src}" autoplay></audio>`;
   hidden_area.insertAdjacentHTML("beforeend", voice_tag_html);
+  printVoice = true;
 }
 
 
@@ -232,6 +262,8 @@ function responseCommand(comm, jeju_comm) {
   chatList.scrollTop = chatList.scrollHeight;
 
   animationCounter = 1;
+    
+  isDone = true;
 }
 
 function responseText(e) {
