@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="../static/chatbot.css">
+    <link rel="stylesheet" href="../static/loading_bar.css">
     <link rel="icon" href="../static/logo.png">
     
     <!-- jQuery 불러오기 -->
@@ -26,7 +27,7 @@
                 <li class="bot__output bot__output--standard"><span class="bot__command">안녕하우꽈!</span></li>
             <li class="bot__output bot__output--standard"><span class="bot__command">오늘 하루 어땠우꽈?</span></li>
             <li class="bot__output bot__output--standard">
-                <span class="bot__output--second-sentence">저에게 이런 것들을 물어봐주세요!</span>
+                <span class="bot__output--second-sentence">나한티 이런 것덜 물어보라</span>
                 <ul>
                 <li class="input__nested-list">"넌 뭘 하고있어?"</li>
                 <!-- <span class="bot__command"></span> -->
@@ -68,6 +69,10 @@
     <div id="hidden_area" style="display:none">
     </div>
         
+     <div class="main">
+        <div class="loading_circle" id="loadding_bar" style="visibility: hidden;"></div>
+    </div>
+
 
     <!-- javascript 호출 -->
     <script src="../static/chatbot.js"></script>
