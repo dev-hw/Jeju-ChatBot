@@ -14,11 +14,11 @@ def generate_text(x):
         temperature=0.8,
         top_p=0.8,
         top_k=100,
-        max_new_tokens=1024,
+        max_new_tokens=100,
         early_stopping=True,
         do_sample=True,
     )
-    input_text = f"[INST]{x} [/INST]"
+    input_text = f"[INST]대화하듯이 답변을 해주세요.\n입력 : {x} [/INST]"
     generated_tokens = gpt_model.generate(
         **gpt_tokenizer(
             input_text,
