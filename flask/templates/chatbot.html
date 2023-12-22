@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="../static/chatbot.css">
-    <link rel="stylesheet" href="../static/loading_bar.css">
+    <link rel="stylesheet" href="./chatbot.css">
+    <link rel="stylesheet" href="./loading_bar.css">
+
     <link rel="icon" href="../static/logo.png">
     
     <!-- jQuery 불러오기 -->
@@ -22,6 +23,7 @@
     Working prototype on meesrutten.me :) -->
     <main class="page__main">
         <div class="block--background">
+        <div class="loading-bar" id="loadingBar">
         <div class="chatbot__overview">
             <ul class="chatlist">
                 <li class="bot__output bot__output--standard"><span class="bot__command">안녕하우꽈!</span></li>
@@ -46,7 +48,7 @@
             <fieldset>
                 <label style="margin: 0 auto;">
                   <input role="switch" id="voice_yn" type="checkbox" />
-                  <span style="color:white">voice</span>
+                  <span style="color:#84a444ff">voice</span>
                 </label>
                 
             </fieldset>
@@ -68,13 +70,12 @@
 
     <div id="hidden_area" style="display:none">
     </div>
-        
-     <div class="main">
-        <div class="loading_circle" id="loadding_bar" style="visibility: hidden;"></div>
+    
+    <div class="main">
+        <div class="loading_circle" hidden></div>
     </div>
 
-
     <!-- javascript 호출 -->
-    <script src="../static/chatbot.js"></script>
+    <script src="./chatbot.js"></script>
 </body>
 </html>
