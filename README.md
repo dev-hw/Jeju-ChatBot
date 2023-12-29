@@ -20,12 +20,6 @@
 
 ## 설치 방법
 
-OS X & 리눅스:
-
-```sh
-npm install my-crazy-module --save
-```
-
 윈도우:
 
 ```sh
@@ -139,6 +133,7 @@ wandb==0.16.1
 
 ### [웹페이지 구현]
 [![결과 영상](https://i.imgur.com/5uUlaGF.png)](https://youtu.be/CeZdtO4QFbY?si=B4kcAgkjjux2bYAe)
+![](https://i.imgur.com/m9jTqKq.gif)
 
 </br>
 
@@ -150,7 +145,15 @@ wandb==0.16.1
 **[오디오 시행착오]**
 
 
+[오디오 시행착오_1]
 
+(https://youtube.com/shorts/qHH3KQVISfE)
+
+[오디오 시행착오_2]
+
+(https://youtube.com/shorts/JuS1F1aS87g)
+
+<br>
 
 **[챗봇 시행착오]**
 
@@ -174,7 +177,7 @@ wandb==0.16.1
 - 챗봇 생성 모델이 제대로 구현되지 않음
 
 
-<img src="https://i.imgur.com/ayDmUfa.png" width="400" height="450"/>
+<img src="https://i.imgur.com/ayDmUfa.png" width="400" height="550"/>
 
 - 처음으로 제대로 구현된 챗봇
 
