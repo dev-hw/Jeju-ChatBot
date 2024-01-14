@@ -18,13 +18,6 @@
 </p> 
 <br></bf>
 
-## 설치 방법
-
-윈도우:
-
-```sh
-edit autoexec.bat
-```
 
 <br></br>
 ## 데이터 사용
